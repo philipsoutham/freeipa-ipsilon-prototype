@@ -1,0 +1,15 @@
+- hosts: all
+  become: true
+  tasks:
+    - include: tasks/common.yml
+
+- hosts: idm-server
+  become: true
+  tasks:
+    - include: tasks/idm-server.yml
+    - include: tasks/ipsilon-server.yml
+
+- hosts: client
+  become: true
+  tasks:
+    - include: tasks/idm-client.yml

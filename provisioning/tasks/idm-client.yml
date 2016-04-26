@@ -1,0 +1,6 @@
+- yum:
+    state: latest
+    name:
+      - ipa-client
+
+- command: /usr/sbin/ipa-client-install --server=ipa.vagrant.develop --realm=VAGRANT.DEVELOP --domain=vagrant.develop --mkhomedir --password=password --principal=admin --ssh-trust-dns --enable-dns-updates --ntp-server=time.jpl.nasa.gov --permit --request-cert --fixed-primary --unattended

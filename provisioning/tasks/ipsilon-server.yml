@@ -1,0 +1,15 @@
+- yum:
+    state: latest
+    name:
+      - ipsilon
+      - ipsilon-saml2
+      - ipsilon-tools-ipa
+      - ipsilon-infosssd
+
+- command: /usr/sbin/ipsilon-server-install --hostname ipa.vagrant.develop --saml2=yes --ipa=yes --info-sssd=yes --form=yes
+
+- file: path=/etc/httpd/conf.d/ssl.conf state=absent
+
+- lineinfile: dest=/etc/ipsilon/idp/idp.conf regexp=SSLRequireSSL line=NSSRequireSSL
+
+- service: name=httpd state=restarted enabled=yes

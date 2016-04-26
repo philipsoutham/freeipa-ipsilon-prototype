@@ -1,0 +1,8 @@
+- yum:
+    state: latest
+    name:
+      - ipsilon-client
+
+- command: "echo password > /tmp/ipsilon-pwd-file"
+
+- command: /usr/sbin/ipsilon-client-install --saml-idp-url https://ipa.vagrant.develop/idp/ --saml-sp-name "Test Client1" --admin-user admin --admin-password /tmp/ipsilon-pwd-file --saml-auth /

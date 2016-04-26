@@ -1,0 +1,32 @@
+- yum:
+    state: latest
+    name:
+      - ipa-server
+      - ipa-server-dns
+
+- service: name=httpd state=stopped enabled=yes
+
+- service: name=firewalld state=started enabled=yes
+
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Linux_Domain_Identity_Authentication_and_Policy_Guide/prerequisites.html#prereq-ports
+- firewalld:
+    service: "{{item}}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: public
+  with_items:
+    - ssh
+    - kerberos
+    - http
+    - https
+    - ldap
+    - ldaps
+    - kpasswd
+    - dns
+    - ntp
+    
+- command: /usr/sbin/ipa-server-install --hostname=ipa.vagrant.develop --realm=VAGRANT.DEVELOP --domain=vagrant.develop --ds-password=password --admin-password=password --mkhomedir --ssh-trust-dns --setup-dns --forwarder=8.8.8.8 --reverse-zone=121.168.192.in-addr.arpa. --unattended
+
+- service: name=httpd state=started enabled=yes
+

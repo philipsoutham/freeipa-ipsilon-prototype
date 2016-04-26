@@ -1,0 +1,28 @@
+- name: clean loopback address
+  lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1' line='127.0.0.1 localhost' owner=root group=root mode=0644
+
+- name: Upgrade all packages
+  yum: name=* state=latest
+
+- yum:
+    state: latest
+    name:
+      - epel-release
+
+- name: Install all the other deps
+  yum:
+    state: latest
+    name:
+      - haveged
+      - ntpdate
+      - ntp
+
+- name: start haveged entropy gathering daemon
+  service: name=haveged state=started enabled=yes
+
+- service: name=ntpd state=stopped
+
+# - name: Sync Time
+#   command: /usr/sbin/ntpdate time.jpl.nasa.gov
+
+- service: name=ntpd state=started enabled=yes
