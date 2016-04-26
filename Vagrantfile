@@ -25,8 +25,8 @@ Vagrant.configure(2) do |config|
   config.vm.define "client1.#{DOMAIN}" do |node|
     node.vm.hostname = "client1.#{DOMAIN}"
     node.vm.provider :libvirt do |domain|
-      domain.memory = 2048
-      domain.cpus = 2
+      domain.memory = 1024
+      domain.cpus = 1
     end
     node.vm.provision "ansible" do |ansible|
       ansible.limit = "all"

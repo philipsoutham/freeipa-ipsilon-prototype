@@ -13,3 +13,4 @@
   become: true
   tasks:
     - include: tasks/idm-client.yml
+    - include: tasks/ipsilon-client.yml
