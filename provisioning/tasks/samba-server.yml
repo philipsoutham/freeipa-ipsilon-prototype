@@ -1,0 +1,22 @@
+- name: Enable COPR repo for samba-dc
+  get_url: url=https://copr.fedorainfracloud.org/coprs/tikro/samba-4.4/repo/epel-7/tikro-samba-4.4-epel-7.repo dest=/etc/yum.repos.d/tikro-samba-4.4-epel-7.repo mode=0644 checksum=sha256:96864f1f5156b7ed3beef29365396db4349bcee5bf0eea9d9eb4d3100dfdf709
+
+- yum:
+    name:
+      - samba-dc
+      - samba-client
+
+- file: path=/etc/samba/smb.conf state=absent
+
+- command: samba-tool domain provision --use-rfc2307 --use-xattrs=yes --server-role=dc --adminpass=Passw0rd --realm=AD.VAGRANT.DEVELOP --domain=AD
+
+- lineinfile: dest=/etc/resolv.conf line="domain ad.vagrant.develop" state=present
+- lineinfile: dest=/etc/resolv.conf line="search ad.vagrant.develop" state=present
+- lineinfile: dest=/etc/resolv.conf regexp='^nameserver' line="nameserver {{ansible_default_ipv4.address}}" state=present
+- lineinfile: dest=/etc/resolv.conf regexp='^dns forwarder' line="dns forwarder = 192.168.121.1" state=present
+- lineinfile: dest=/etc/samba/smb.conf line="        allow dns updates = nonsecure" state=present insertafter="\s+dns forwarder"
+- file: src=/var/lib/samba/private/krb5.conf dest=/etc/krb5.conf state=link
+
+- copy: src=samba.service dest=/etc/systemd/system/samba.service
+
+- service: name=samba state=started enabled=yes

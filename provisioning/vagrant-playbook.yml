@@ -1,7 +1,16 @@
 - hosts: all
   become: true
   tasks:
+    # - debug: msg="{{ansible_hostname}}"
+    # - debug: msg="{{ansible_fqdn}}"
+    # - name: clean loopback address
+    #   lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1[\s]+{{ansible_hostname}}' state=absent
     - include: tasks/common.yml
+
+- hosts: samba-server
+  become: true
+  tasks:
+    - include: tasks/samba-server.yml
 
 - hosts: idm-server
   become: true

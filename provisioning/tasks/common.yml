@@ -1,5 +1,11 @@
 - name: clean loopback address
+  lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1[\s]+{{ansible_hostname}}' state=absent
+
+- name: clean loopback address
   lineinfile: dest=/etc/hosts regexp='^127\.0\.0\.1' line='127.0.0.1 localhost' owner=root group=root mode=0644
+
+- name: cleaning task for yum
+  command: /usr/bin/yum clean all
 
 - name: Upgrade all packages
   yum: name=* state=latest
@@ -20,7 +26,7 @@
 - name: start haveged entropy gathering daemon
   service: name=haveged state=started enabled=yes
 
-- service: name=ntpd state=stopped
+# - service: name=ntpd state=stopped
 
 # - name: Sync Time
 #   command: /usr/sbin/ntpdate time.jpl.nasa.gov
