@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
       domain.cpus = 1
     end
     node.vm.provider :virtualbox do |domain|
-      node.vm.network "private_network", virtualbox__intnet: true
+      node.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: true
       domain.memory = 1024
       domain.cpus = 1
     end
@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
       domain.cpus = 2
     end
     node.vm.provider :virtualbox do |domain, override|
-      override.vm.network "private_network", virtualbox__intnet: true
+      override.vm.network "private_network", ip: "192.168.50.5", virtualbox__intnet: true
       domain.memory = 2048
       domain.cpus = 2
     end
@@ -52,13 +52,14 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = "win10"
     node.vm.communicator = "winrm"
     node.vm.provider :virtualbox do |domain, override|
-      override.vm.box = "inclusivedesign/windows10-eval"
-      override.vm.box_version = "0.3.0"
-      # override.vm.box = "jhakonen/windows-10-n-pro-en-x86_64"
-      # override.vm.box_version = "1.0.0"
-      override.vm.network "private_network", virtualbox__intnet: true
+      # override.vm.box = "inclusivedesign/windows10-eval"
+      # override.vm.box_version = "0.3.0"
+      override.vm.box = "jhakonen/windows-10-n-pro-en-x86_64"
+      override.vm.box_version = "1.0.0"
+      # override.vm.network "private_network", ip: "192.168.50.6", virtualbox__intnet: true
       domain.memory = 2048
       domain.cpus = 2
+      domain.gui = true
     end
     node.vm.provider :libvirt do |domain, override|
       override.vm.box = "moozer/win10"
@@ -77,7 +78,7 @@ Vagrant.configure(2) do |config|
       domain.cpus = 1
     end
     node.vm.provider :virtualbox do |domain, override|
-      override.vm.network "private_network", virtualbox__intnet: true
+      override.vm.network "private_network", ip: "192.168.50.7", virtualbox__intnet: true
       domain.memory = 1024
       domain.cpus = 1
     end
