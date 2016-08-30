@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: "samba-server:idm-server:client"
   become: true
   tasks:
     # - debug: msg="{{ansible_hostname}}"

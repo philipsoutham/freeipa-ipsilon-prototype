@@ -13,8 +13,9 @@
 - lineinfile: dest=/etc/resolv.conf line="domain ad.vagrant.develop" state=present
 - lineinfile: dest=/etc/resolv.conf line="search ad.vagrant.develop" state=present
 - lineinfile: dest=/etc/resolv.conf regexp='^nameserver' line="nameserver {{ansible_default_ipv4.address}}" state=present
-- lineinfile: dest=/etc/resolv.conf regexp='^dns forwarder' line="dns forwarder = 192.168.121.1" state=present
+- lineinfile: dest=/etc/resolv.conf regexp='^dns forwarder' line="dns forwarder = 10.0.2.3" state=present
 - lineinfile: dest=/etc/samba/smb.conf line="        allow dns updates = nonsecure" state=present insertafter="\s+dns forwarder"
+- file: path=/etc/krb5.conf state=absent
 - file: src=/var/lib/samba/private/krb5.conf dest=/etc/krb5.conf state=link
 
 - copy: src=samba.service dest=/etc/systemd/system/samba.service

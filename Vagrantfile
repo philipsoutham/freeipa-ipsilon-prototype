@@ -41,13 +41,13 @@ Vagrant.configure(2) do |config|
       domain.cpus = 2
     end
   end
-  config.vm.define "win10" do |node|
-    node.vm.hostname = "win10"
+  config.vm.define "win" do |node|
+    node.vm.hostname = "win"
     node.vm.communicator = "winrm"
     node.vm.provider :virtualbox do |domain, override1|
       # override.vm.box = "inclusivedesign/windows10-eval"
       # override.vm.box_version = "0.3.0"
-      override1.vm.box = "jhakonen/windows-10-n-pro-en-x86_64"
+      override1.vm.box = "opentable/win-2012r2-standard-amd64-nocm"
       override1.vm.box_version = "1.0.0"
       override1.vm.network "private_network", ip: "192.168.56.103", :name => "vboxnet0", :adapter => 2
       domain.memory = 2048
@@ -63,6 +63,7 @@ Vagrant.configure(2) do |config|
       domain.cpus = 2
     end
   end
+
   config.vm.define "client1.#{DOMAIN}" do |node|
     node.vm.hostname = "client1.#{DOMAIN}"
     node.vm.provider :libvirt do |domain|
@@ -80,7 +81,7 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "idm-server" => ["ipa.#{DOMAIN}"],
         "client" => ["client1.#{DOMAIN}"],
-        "samba-server" => ["ad.#{DOMAIN}"],
+        "samba-server" => ["samba.#{DOMAIN}"],
       }
     end
   end

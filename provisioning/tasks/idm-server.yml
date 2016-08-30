@@ -26,7 +26,8 @@
     - dns
     - ntp
     
-- command: /usr/sbin/ipa-server-install --hostname=ipa.vagrant.develop --realm=VAGRANT.DEVELOP --domain=vagrant.develop --ds-password=password --admin-password=password --mkhomedir --ssh-trust-dns --setup-dns --forwarder=8.8.8.8 --reverse-zone=121.168.192.in-addr.arpa. --unattended
+# - command: /usr/sbin/ipa-server-install --hostname=ipa.vagrant.develop --realm=VAGRANT.DEVELOP --domain=vagrant.develop --ds-password=password --admin-password=password --mkhomedir --ssh-trust-dns --setup-dns --forwarder=8.8.8.8 --reverse-zone=121.168.192.in-addr.arpa. --unattended
+- command: /usr/sbin/ipa-server-install --hostname=ipa.vagrant.develop --realm=VAGRANT.DEVELOP --domain=vagrant.develop --ds-password=password --admin-password=password --mkhomedir --ssh-trust-dns --setup-dns --forwarder=8.8.8.8 --reverse-zone=56.168.192.in-addr.arpa. --unattended
 
 - service: name=httpd state=started enabled=yes
 
