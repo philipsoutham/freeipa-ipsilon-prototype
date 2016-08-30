@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_version = "1607.01"
   config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true # true
+  config.hostmanager.manage_host = true 
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
 
@@ -22,18 +22,11 @@ Vagrant.configure(2) do |config|
       domain.memory = 1024
       domain.cpus = 1
     end
-    node.vm.provider :virtualbox do |domain|
-      node.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: true
+    node.vm.provider :virtualbox do |domain, override|
+      override.vm.network "private_network", ip: "192.168.56.102", :name => "vboxnet0", :adapter => 2
       domain.memory = 1024
       domain.cpus = 1
     end
-    # node.vm.provision "ansible" do |ansible|
-    #   ansible.limit = "all"
-    #   ansible.playbook = "provisioning/vagrant-playbook.yml"
-    #   ansible.groups = {
-    #     "samba-server" => ["samba.#{DOMAIN}"],
-    #   }
-    # end
   end
 
   config.vm.define "ipa.#{DOMAIN}" do |node|
@@ -42,34 +35,33 @@ Vagrant.configure(2) do |config|
       domain.memory = 2048
       domain.cpus = 2
     end
-    node.vm.provider :virtualbox do |domain, override|
-      override.vm.network "private_network", ip: "192.168.50.5", virtualbox__intnet: true
+    node.vm.provider :virtualbox do |domain, override0|
+      override0.vm.network "private_network", ip: "192.168.56.104", :name => "vboxnet0", :adapter => 2
       domain.memory = 2048
       domain.cpus = 2
     end
   end
-  config.vm.define "win10.#{DOMAIN}" do |node|
+  config.vm.define "win10" do |node|
     node.vm.hostname = "win10"
     node.vm.communicator = "winrm"
-    node.vm.provider :virtualbox do |domain, override|
+    node.vm.provider :virtualbox do |domain, override1|
       # override.vm.box = "inclusivedesign/windows10-eval"
       # override.vm.box_version = "0.3.0"
-      override.vm.box = "jhakonen/windows-10-n-pro-en-x86_64"
-      override.vm.box_version = "1.0.0"
-      # override.vm.network "private_network", ip: "192.168.50.6", virtualbox__intnet: true
+      override1.vm.box = "jhakonen/windows-10-n-pro-en-x86_64"
+      override1.vm.box_version = "1.0.0"
+      override1.vm.network "private_network", ip: "192.168.56.103", :name => "vboxnet0", :adapter => 2
       domain.memory = 2048
       domain.cpus = 2
-      domain.gui = true
+      # domain.gui = true
     end
-    node.vm.provider :libvirt do |domain, override|
-      override.vm.box = "moozer/win10"
-      override.vm.box_version = "0.1.3"
-      override.winrm.username = "vagrant"
-      override.winrm.password = "vagrant"
+    node.vm.provider :libvirt do |domain, override2|
+      override2.vm.box = "moozer/win10"
+      override2.vm.box_version = "0.1.3"
+      override2.winrm.username = "vagrant"
+      override2.winrm.password = "vagrant"
       domain.memory = 2048
       domain.cpus = 2
     end
-
   end
   config.vm.define "client1.#{DOMAIN}" do |node|
     node.vm.hostname = "client1.#{DOMAIN}"
@@ -77,8 +69,8 @@ Vagrant.configure(2) do |config|
       domain.memory = 1024
       domain.cpus = 1
     end
-    node.vm.provider :virtualbox do |domain, override|
-      override.vm.network "private_network", ip: "192.168.50.7", virtualbox__intnet: true
+    node.vm.provider :virtualbox do |domain, override3|
+      override3.vm.network "private_network", ip: "192.168.56.113", :name => "vboxnet0", :adapter => 2
       domain.memory = 1024
       domain.cpus = 1
     end
