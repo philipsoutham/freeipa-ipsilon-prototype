@@ -16,18 +16,18 @@ Vagrant.configure(2) do |config|
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
 
-  config.vm.define "samba.#{DOMAIN}" do |node|
-    node.vm.hostname = "samba.#{DOMAIN}"
-    node.vm.provider :libvirt do |domain|
-      domain.memory = 1024
-      domain.cpus = 1
-    end
-    node.vm.provider :virtualbox do |domain, override|
-      override.vm.network "private_network", ip: "192.168.56.102", :name => "vboxnet0", :adapter => 2
-      domain.memory = 1024
-      domain.cpus = 1
-    end
-  end
+  # config.vm.define "samba.#{DOMAIN}" do |node|
+  #   node.vm.hostname = "samba.#{DOMAIN}"
+  #   node.vm.provider :libvirt do |domain|
+  #     domain.memory = 1024
+  #     domain.cpus = 1
+  #   end
+  #   node.vm.provider :virtualbox do |domain, override|
+  #     override.vm.network "private_network", ip: "192.168.56.102", :name => "vboxnet0", :adapter => 2
+  #     domain.memory = 1024
+  #     domain.cpus = 1
+  #   end
+  # end
 
   config.vm.define "ipa.#{DOMAIN}" do |node|
     node.vm.hostname = "ipa.#{DOMAIN}"
@@ -41,28 +41,28 @@ Vagrant.configure(2) do |config|
       domain.cpus = 2
     end
   end
-  config.vm.define "win" do |node|
-    node.vm.hostname = "win"
-    node.vm.communicator = "winrm"
-    node.vm.provider :virtualbox do |domain, override1|
-      # override.vm.box = "inclusivedesign/windows10-eval"
-      # override.vm.box_version = "0.3.0"
-      override1.vm.box = "opentable/win-2012r2-standard-amd64-nocm"
-      override1.vm.box_version = "1.0.0"
-      override1.vm.network "private_network", ip: "192.168.56.103", :name => "vboxnet0", :adapter => 2
-      domain.memory = 2048
-      domain.cpus = 2
-      # domain.gui = true
-    end
-    node.vm.provider :libvirt do |domain, override2|
-      override2.vm.box = "moozer/win10"
-      override2.vm.box_version = "0.1.3"
-      override2.winrm.username = "vagrant"
-      override2.winrm.password = "vagrant"
-      domain.memory = 2048
-      domain.cpus = 2
-    end
-  end
+  # config.vm.define "win" do |node|
+  #   node.vm.hostname = "win"
+  #   node.vm.communicator = "winrm"
+  #   node.vm.provider :virtualbox do |domain, override1|
+  #     # override.vm.box = "inclusivedesign/windows10-eval"
+  #     # override.vm.box_version = "0.3.0"
+  #     override1.vm.box = "opentable/win-2012r2-standard-amd64-nocm"
+  #     override1.vm.box_version = "1.0.0"
+  #     override1.vm.network "private_network", ip: "192.168.56.103", :name => "vboxnet0", :adapter => 2
+  #     domain.memory = 2048
+  #     domain.cpus = 2
+  #     # domain.gui = true
+  #   end
+  #   node.vm.provider :libvirt do |domain, override2|
+  #     override2.vm.box = "moozer/win10"
+  #     override2.vm.box_version = "0.1.3"
+  #     override2.winrm.username = "vagrant"
+  #     override2.winrm.password = "vagrant"
+  #     domain.memory = 2048
+  #     domain.cpus = 2
+  #   end
+  # end
 
   config.vm.define "client1.#{DOMAIN}" do |node|
     node.vm.hostname = "client1.#{DOMAIN}"
